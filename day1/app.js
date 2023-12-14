@@ -11,13 +11,42 @@ const readInterface = readline.createInterface({
 });
 
 let total = 0;
+
 readInterface.on("line", function (line) {
+  const numberWords = [
+    "zero",
+    "one",
+    "two",
+    "three",
+    "four",
+    "five",
+    "six",
+    "seven",
+    "eight",
+    "nine",
+  ];
+  let replaced;
+  do {
+    replaced = false;
+    for (let i = 0; i < numberWords.length; i++) {
+      const numberWord = numberWords[i];
+      const numberRegex = new RegExp(`${numberWord}`, "i");
+      if (numberRegex.test(line)) {
+        line = line.replace(numberRegex, i.toString());
+        replaced = true;
+        break;
+      }
+    }
+  } while (replaced);
+
+  console.log(line);
+
   const numberChar = line.match(/\d/g);
-  let number = parseInt(numberChar[0] + numberChar[0]);
-  if (numberChar.length > 1) {
-    console.log("number is 2 digits");
-    number = parseInt(numberChar[0] + numberChar[numberChar.length - 1]);
+  let number = 0;
+  if (numberChar) {
+    number = parseInt(numberChar.join(""));
   }
+
   total += number;
 });
 
