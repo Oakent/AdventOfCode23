@@ -12,50 +12,28 @@ const readInterface = readline.createInterface({
 
 let total = 0;
 
+changeLine = (line) => {
+  line = line.replaceAll("one", "o1ne");
+  line = line.replaceAll("two", "t2wo");
+  line = line.replaceAll("three", "t3hree");
+  line = line.replaceAll("four", "f4our");
+  line = line.replaceAll("five", "f5ive");
+  line = line.replaceAll("six", "s6ix");
+  line = line.replaceAll("seven", "s7even");
+  line = line.replaceAll("eight", "e8ight");
+  line = line.replaceAll("nine", "n9ine");
+  return line;
+};
+
 readInterface.on("line", function (line) {
-  const numberWords = [
-    "zero",
-    "one",
-    "two",
-    "three",
-    "four",
-    "five",
-    "six",
-    "seven",
-    "eight",
-    "nine",
-  ];
-
-  for (let i = 0; i < line.length; i++) {
-    for (let j = 0; j < numberWords.length; j++) {
-      if (line.substring(0, i).includes(numberWords[j])) {
-        line = line.replace(numberWords[j], j.toString());
-      }
-    }
-  }
-  for (let k = line.length - 1; k >= 0; k--) {
-    for (let l = 0; l < numberWords.length; l++) {
-      if (line.substring(k).includes(numberWords[l])) {
-        line = line.replace(numberWords[l], l.toString());
-      }
-    }
-  }
+  line = changeLine(line);
   console.log(line);
-  const numberChars = Array.from(line.matchAll(/\d/g));
-  let firstNumber = 0;
-  let lastNumber = 0;
-
-  if (numberChars.length > 1) {
-    firstNumber = parseInt(numberChars[0]);
-    lastNumber = parseInt(numberChars[numberChars.length - 1]);
-    total += firstNumber * 10 + lastNumber;
+  const numberChar = line.match(/\d/g);
+  let number = parseInt(numberChar[0] + numberChar[0]);
+  if (numberChar.length > 1) {
+    number = parseInt(numberChar[0] + numberChar[numberChar.length - 1]);
   }
-  if (numberChars.length === 1) {
-    firstNumber = parseInt(numberChars[0] + numberChars[0]);
-    total += firstNumber;
-  }
-  console.log(numberChars);
-  console.log(firstNumber, lastNumber);
+  total += number;
 });
 
 readInterface.on("close", function () {
